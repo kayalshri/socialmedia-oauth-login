@@ -25,9 +25,9 @@ include "socialmedia_oauth_connect.php";
 $oauth = new socialmedia_oauth_connect();
 $oauth->provider="Box";
 $oauth->client_id = "l7r9q1aslzc5hmwrikgyzqqngzc8ef0i";
-$oauth->client_secret = "3x07qQbMDwzEi5x7oGuF9uk3zHmaOkwM";
+$oauth->client_secret = "xxxxxxxxxxxxxxxxxxxxxxxx";
 $oauth->scope="";
-$oauth->redirect_uri  ="https://silver.nseasy.com/~ngiriraj/socialMedia/oauthlogin/box.php";
+$oauth->redirect_uri  ="http://ngiriraj/socialMedia/oauthlogin/box.php";
 
 $oauth->Initialize();
 
