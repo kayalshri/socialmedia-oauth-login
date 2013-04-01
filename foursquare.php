@@ -1,0 +1,48 @@
+<?php
+/*
+	@author		:	Giriraj Namachivayam
+	@date 		:	Mar 20, 2013
+	@demourl		:	http://ngiriraj.com/socialMedia/oauthlogin/foursquare.php
+	@document		:	http://ngiriraj.com/work/foursquare-connect-by-using-oauth-in-php/
+	@license		: 	Free to use, 
+	@History		:	V1.0 - Released oauth 2.0 service providers login access	
+	@oauth2		:	Support following oauth2 login
+					Bitly
+					Wordpress
+					Paypal
+					Facebook
+					Google
+					Microsoft(MSN,Live,Hotmail)
+					Foursquare
+					Box
+					Reddit
+					Yammer
+					Yandex					
+	
+*/
+
+include "socialmedia_oauth_connect.php";
+
+$oauth = new socialmedia_oauth_connect();
+
+$oauth->provider="Foursquare";
+$oauth->client_id = "CVH2LUFNUVAYQVPYCECHZ0FGOKEQHLKIRJBGHBPQVV0T1ZX1";
+$oauth->client_secret = "xxxxxxxxxxxxxxxxxxxxxxxx";
+$oauth->scope="";
+$oauth->redirect_uri  ="http://ngiriraj.com/socialMedia/oauthlogin/foursquare.php";
+
+$oauth->Initialize();
+
+$code = ($_REQUEST["code"]) ?  ($_REQUEST["code"]) : "";
+
+if(empty($code)) {
+	$oauth->Authorize();
+}else{
+	$oauth->code = $code;
+#	print $oauth->getAccessToken();
+	$getData = json_decode($oauth->getUserProfile());
+	$oauth->debugJson($getData);
+}
+
+
+?>
