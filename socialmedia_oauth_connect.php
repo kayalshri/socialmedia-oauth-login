@@ -21,6 +21,20 @@
 					Meetup	
 					StockTwits	
 					Github			
+					
+					Recently added on 25-Apr-2013
+					LinkedIn
+					Imgur
+					AngelList
+					DeviantArt
+					Snapr
+					DailyMotion
+					MailChimp
+					Formstack
+					Wepay
+					Stripe
+					MixCloud
+					Flattr
 	Document	:	Step-by-step Tutorial for oAuth2 connect and Demo
 					http://ngiriraj.com/work/stocktwits-connect-by-using-oauth-in-php/
 					http://ngiriraj.com/work/meetup-connect-by-using-oauth-in-php/
@@ -209,7 +223,108 @@ class socialmedia_oauth_connect
 				$this->userProfileUrl = "https://api.github.com/user?access_token=";
 				$this->scope="read";
 				break;
-
+			
+			case 'LinkedIn':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://www.linkedin.com/uas/oauth2/authorization?';
+				$this->accessTokenUrl = 'https://www.linkedin.com/uas/oauth2/accessToken?';
+				$this->responseType="code";
+				$this->userProfileUrl = "https://api.linkedin.com/v1/people/~?format=json&oauth2_access_token=";
+				break;
+			
+			
+			case 'Flattr':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://flattr.com/oauth/authorize?';
+				$this->accessTokenUrl = 'https://flattr.com/oauth/token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "https://api.flattr.com/rest/v2/user?access_token=";
+				$this->scope="flattr%20thing";
+				break;
+			
+			case 'MixCloud':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://www.mixcloud.com/oauth/authorize?';
+				$this->accessTokenUrl = 'https://www.mixcloud.com/oauth/access_token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "";
+				break;
+				
+			case 'Stripe':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://connect.stripe.com/oauth/authorize?';
+				$this->accessTokenUrl = 'https://connect.stripe.com/oauth/token?';
+				$this->responseType="code";
+				$this->scope="read_write";
+				$this->userProfileUrl = "";
+				break;
+			
+			case 'Wepay':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://www.wepay.com/v2/oauth2/authorize?';
+				$this->accessTokenUrl = 'https://wepayapi.com/v2/oauth2/token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "";
+				$this->scope="view_user";
+				break;
+			
+			case 'Formstack':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://www.formstack.com/api/v2/oauth2/authorize?';
+				$this->accessTokenUrl = 'https://www.formstack.com/api/v2/oauth2/token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "";
+				break;
+			
+			case 'MailChimp':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://login.mailchimp.com/oauth2/authorize?';
+				$this->accessTokenUrl = 'https://login.mailchimp.com/oauth2/token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "";
+				break;
+			
+			case 'DailyMotion':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://api.dailymotion.com/oauth/authorize?';
+				$this->accessTokenUrl = 'https://api.dailymotion.com/oauth/token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "https://api.dailymotion.com/me?access_token=";
+				$this->scope="read+write";
+				break;
+			
+			case 'Snapr':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://sna.pr/api/oauth/authorize?';
+				$this->accessTokenUrl = 'https://sna.pr/api/oauth/access_token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "";
+				break;
+				
+			case 'DeviantArt':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://www.deviantart.com/oauth2/draft10/authorize?';
+				$this->accessTokenUrl = 'https://www.deviantart.com/oauth2/draft10/token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "https://www.deviantart.com/api/draft10/user/whoami?access_token=";
+				break;
+			
+			case 'AngelList':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://angel.co/api/oauth/authorize?';
+				$this->accessTokenUrl = 'https://angel.co/api/oauth/token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "https://api.angel.co/1/me?access_token=";
+				break;
+			
+			case 'Imgur':
+				$this->oauth_version="2.0";			
+				$this->dialogUrl = 'https://api.imgur.com/oauth2/authorize?';
+				$this->accessTokenUrl = 'https://api.imgur.com/oauth2/token?';
+				$this->responseType="code";
+				$this->userProfileUrl = "";//https://api.imgur.com/3/account/me?access_token=
+				$this->header="Authorization: Bearer ";				
+				break;
 
 
 			default:
@@ -217,8 +332,8 @@ class socialmedia_oauth_connect
 		}
   	}
   	
-  	
-  
+ 
+
   	public function Authorize(){
   	
   		if($this->oauth_version == "2.0"){
@@ -278,9 +393,16 @@ class socialmedia_oauth_connect
    			$atoken = $getatoken->access_token->token;
    		}
 	  	
+	  	if ($this->userProfileUrl){
   		$profile_url = $this->userProfileUrl."".$atoken;
-  			
+  		#$_SESSION['atoken']=$atoken;
+		#print "profile :".$profile_url;
+		#exit();
+		
 		return $this->curl_request($profile_url,"GET",$atoken);
+		}else{
+		return $getAccessToken_value;
+		}
 
   	} 
   	
@@ -292,38 +414,44 @@ class socialmedia_oauth_connect
   		echo "<pre>";
   		print_r($data);
   		echo "</pre>";
+  		
+		# Redirect where ever you need **************************************************************
+		#$c_session = $this->provider."_profile";
+  		#$_SESSION[$this->provider] = "true";
+		#$_SESSION[$c_session] = $data;
+
+		#echo("<script> top.location.href='index.php#".$this->provider."'</script>");
+  		
   	}
-  	
 	public function curl_request($url,$method,$postvals){
-		
-		$ch = curl_init($url);
-		if ($method == "POST"){
-		   $options = array(
-	                CURLOPT_POST => 1,
-	                CURLOPT_POSTFIELDS => $postvals,
-	                CURLOPT_RETURNTRANSFER => 1,
-			);
-		
-		}else{
-		
-		   $options = array(
-	                CURLOPT_RETURNTRANSFER => 1,
-			);
-		
-		}
-		curl_setopt_array( $ch, $options );
-		if($this->header){
-		
-			curl_setopt( $ch, CURLOPT_HTTPHEADER, array( $this->header . $postvals) );
-		}
-		
-		$response = curl_exec($ch);
-		curl_close($ch);
-	#	print_r($response);
-		return $response;
+	
+	$ch = curl_init($url);
+	if ($method == "POST"){
+	   $options = array(
+                CURLOPT_POST => 1,
+                CURLOPT_POSTFIELDS => $postvals,
+                CURLOPT_RETURNTRANSFER => 1,
+		);
+	
+	}else{
+	
+	   $options = array(
+                CURLOPT_RETURNTRANSFER => 1,
+		);
+	
 	}
-
+	curl_setopt_array( $ch, $options );
+	if($this->header){
+	
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( $this->header . $postvals) );
+	}
+	
+	$response = curl_exec($ch);
+	curl_close($ch);
+#	print_r($response);
+	return $response;
+	}
+ 
 }
-
 
 ?>
