@@ -1,0 +1,28 @@
+{
+	"name": "kayalshri/socialmedia-oauth-login",
+	"description": "oAuth2 light-weight wrapper class",
+	"type": "library",
+	"keywords": ["authentication","auth","oauth","oAuth2","bitly","facebook","google","twitter"],
+	"homepage": "http://ngiriraj.com",
+	"license": "MIT",
+	"authors": [
+		{
+		"name": "Giriraj Namachivayam",
+		"email": "kayalshri@gmail.com",
+		"homepage": "http://ngiriraj.com"
+		}
+	],
+	"require": {
+		"php": ">=5.0.0"
+	},
+	"suggest": {
+	"socialmedia-oauth-login/facebook": "Allows Facebook authentication",
+	"socialmedia-oauth-login/google": "Allows Google authentication",
+	"socialmedia-oauth-login/paypal": "Allows PayPal authentication"
+	},
+	"autoload": {
+		"classmap": [
+			"socialmedia_oauth_connect"
+		]
+	}
+}
